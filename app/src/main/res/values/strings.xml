@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">移动软件开发与安全作业</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="hello_jnu">Hello JNU</string>
+    <string name="click_me">click me!</string>
 </resources>
