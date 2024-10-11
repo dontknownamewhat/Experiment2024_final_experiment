@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageViewActivity">
+
+    <!-- ImageView 用于显示图片 -->
+    <ImageView
+        android:id="@+id/image_view_funny"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/funny_1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="fitCenter" />
+
+    <!-- Guideline 用于将按钮放置在底部 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <!-- “上一张”按钮 -->
+    <Button
+        android:id="@+id/button_previous"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Previous"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_next"
+        app:layout_constraintWidth_percent="0.45"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp" />
+
+    <!-- “下一张”按钮 -->
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintStart_toEndOf="@id/button_previous"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.45"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
