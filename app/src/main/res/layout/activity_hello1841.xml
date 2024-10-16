@@ -1,116 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Hello1841Activity">
-    <TextView
-        android:id="@+id/textview_helloworld"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/click_me"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_helloworld" />
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:stretchColumns="*"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <!-- 第一行 0 ~ 3 -->
-        <TableRow>
-            <Button
-                android:id="@+id/buttonview_number_0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"/>
-            <Button
-                android:id="@+id/buttonview_number_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"/>
-            <Button
-                android:id="@+id/buttonview_number_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2"/>
-            <Button
-                android:id="@+id/buttonview_number_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"/>
-        </TableRow>
-
-        <!-- 第二行 4 ~ 7 -->
-        <TableRow>
-            <Button
-                android:id="@+id/buttonview_number_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4"/>
-            <Button
-                android:id="@+id/buttonview_number_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5"/>
-            <Button
-                android:id="@+id/buttonview_number_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6"/>
-            <Button
-                android:id="@+id/buttonview_number_7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7"/>
-        </TableRow>
-
-        <!-- 第三行 8 ~ 9 -->
-        <TableRow>
-            <Button
-                android:id="@+id/buttonview_number_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="8"/>
-            <Button
-                android:id="@+id/buttonview_number_9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="9"/>
-        </TableRow>
-
-        <!-- 操作按钮行 Clean 和 Input -->
-        <TableRow>
-            <Button
-                android:id="@+id/buttonview_clean"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Clean"/>
-            <Button
-                android:id="@+id/buttonview_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Input"/>
-        </TableRow>
-    </TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
