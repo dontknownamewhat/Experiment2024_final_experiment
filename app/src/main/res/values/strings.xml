@@ -3,4 +3,7 @@
     <string name="hello_world">Hello World!</string>
     <string name="hello_jnu">Hello JNU</string>
     <string name="click_me">click me!</string>
+    <string name="price">价格</string>
+    <string name="book_name">书名</string>
+    <string name="save">保存</string>
 </resources>
