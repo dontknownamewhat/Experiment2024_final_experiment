@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.casper.Experiment2024.AddEditActivity;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
@@ -41,7 +40,7 @@ public class Hello1841Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case 0: // 添加
                 // 启动添加Activity
-                Intent addIntent = new Intent(this, AddEditActivity.class);
+                Intent addIntent = new Intent(this, BookDetailsActivity.class);
                 activityResultLauncher.launch(addIntent);
                 break;
             case 1: // 删除
@@ -58,7 +57,7 @@ public class Hello1841Activity extends AppCompatActivity {
             case 2: // 修改
                 // 启动修改Activity并传递当前书籍信息
                 Item currentItem = items.get(position);
-                Intent editIntent = new Intent(this, AddEditActivity.class);
+                Intent editIntent = new Intent(this, BookDetailsActivity.class);
                 editIntent.putExtra("item", (CharSequence) currentItem); // 传递当前书籍对象
                 activityResultLauncher.launch(editIntent);
                 break;
