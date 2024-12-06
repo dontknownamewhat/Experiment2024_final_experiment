@@ -6,4 +6,7 @@
     <string name="price">价格</string>
     <string name="book_name">书名</string>
     <string name="save">保存</string>
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="change">修改</string>
 </resources>

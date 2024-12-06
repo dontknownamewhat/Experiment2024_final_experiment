@@ -7,13 +7,17 @@
     android:orientation="vertical"
     tools:context=".Hello1841Activity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_items"
+    <!-- TabLayout for the tabs -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:layout_height="wrap_content" />
+
+    <!-- ViewPager2 to display fragments for each tab -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>
