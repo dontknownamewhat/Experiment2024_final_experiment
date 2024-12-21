@@ -9,4 +9,9 @@
     <string name="add">添加</string>
     <string name="delete">删除</string>
     <string name="change">修改</string>
+    <string name="clocking_event">描述打卡事件</string>
+    <string name="Clocking_record">添加打卡记录</string>
+    <string name="photo_description">Taken Photo</string>
+    <string name="description">打卡位置名称</string>
+    <string name="check_in_with_photo">拍照\n</string>
 </resources>

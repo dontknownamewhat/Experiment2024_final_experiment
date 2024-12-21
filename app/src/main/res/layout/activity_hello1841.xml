@@ -20,4 +20,35 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <!-- New LinearLayout for Check-In UI elements -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- EditText for Check-in Description -->
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/clocking_event"
+            android:padding="8dp"/>
+
+        <!-- Button to Add Check-In Record -->
+        <Button
+            android:id="@+id/btnAddCheckIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Clocking_record"
+            android:layout_gravity="start"/>
+
+        <!-- RecyclerView to Display All Check-In Records -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCheckIns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
 </LinearLayout>

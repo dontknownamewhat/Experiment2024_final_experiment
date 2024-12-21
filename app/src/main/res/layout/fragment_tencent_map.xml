@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- MapView 控件 -->
+    <com.tencent.tencentmap.mapsdk.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCheckInWithPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check_in_with_photo"
+            android:visibility="visible" />
+    </com.tencent.tencentmap.mapsdk.maps.MapView>
+    <!-- 添加按钮用于触发拍照打卡 -->
+    <!-- 用于显示拍摄的照片 -->
+    <ImageView
+        android:id="@+id/ivTakenPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/photo_description"
+        android:visibility="gone"/> <!-- 初始状态下隐藏 -->
+</FrameLayout>
