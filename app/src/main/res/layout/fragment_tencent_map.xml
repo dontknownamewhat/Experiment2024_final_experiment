@@ -8,16 +8,7 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCheckInWithPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/check_in_with_photo"
-            android:visibility="visible" />
-    </com.tencent.tencentmap.mapsdk.maps.MapView>
+        android:visibility="visible"/>
     <!-- 添加按钮用于触发拍照打卡 -->
     <!-- 用于显示拍摄的照片 -->
     <ImageView
