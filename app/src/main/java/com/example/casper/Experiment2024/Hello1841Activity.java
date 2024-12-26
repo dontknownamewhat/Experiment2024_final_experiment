@@ -14,9 +14,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.casper.Experiment2024.model.CheckIn;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import android.view.View;
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 import java.util.List;
 import com.example.casper.Experiment2024.model.CheckInViewModel;
 import com.example.casper.Experiment2024.adapter.CheckInAdapter;
@@ -26,6 +28,11 @@ public class Hello1841Activity extends AppCompatActivity {
     private CheckInViewModel checkInViewModel;
     private RecyclerView recyclerView;
     private CheckInAdapter adapter;
+
+    // 集成拍照功能的相关变量
+    private Button btn_take_photo, btn_choose_photo;
+    private ImageView iv_image;
+    private static final int TAKE_PHOTO_REQUEST = 333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +84,30 @@ public class Hello1841Activity extends AppCompatActivity {
             if (!description.isEmpty()) {
                 checkInViewModel.insert(new CheckIn(description));
                 etDescription.setText(""); // 清空输入框
+            }
+        });
+
+        // 集成拍照功能的相关代码
+        btn_take_photo = findViewById(R.id.btn_take_photo);
+        btn_choose_photo = findViewById(R.id.btn_choose_photo);
+        iv_image = findViewById(R.id.iv_image);
+
+        btn_take_photo.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(Hello1841Activity.this, TakePhotoActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(this, "无法启动拍照功能", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_choose_photo.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, TAKE_PHOTO_REQUEST);
+            } catch (Exception e) {
+                Toast.makeText(this, "无法启动选择照片功能", Toast.LENGTH_SHORT).show();
             }
         });
     }
