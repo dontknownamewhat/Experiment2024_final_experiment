@@ -14,4 +14,8 @@
     <string name="photo_description">Taken Photo</string>
     <string name="description">打卡位置名称</string>
     <string name="check_in_with_photo">拍照\n</string>
+    <string name="take_picture1">拍照1</string>
+    <string name="take_picture2">拍照2</string>
+    <string name="album1">相册1</string>
+    <string name="album2">相册2</string>
 </resources>

@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!--腾讯地图 SDK 要求的权限(开始)-->
-    <!--访问网络获取地图服务-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--检查网络可用性-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- 访问WiFi状态 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--获取 device id 辨别设备-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!--腾讯地图 SDK 要求的权限(结束)-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <!-- 腾讯地图 SDK 要求的权限(开始) -->
+    <!-- 访问网络获取地图服务 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 检查网络可用性 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 访问WiFi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取 device id 辨别设备 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 腾讯地图 SDK 要求的权限(结束) -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
-        tools:ignore="ScopedStorage" />
-    <!-- 声明应用所需的权限 -->
+        tools:ignore="ScopedStorage" /> <!-- 声明应用所需的权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 声明应用使用的硬件特性 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
-    <!-- 声明应用使用的硬件特性 -->
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -33,6 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Experiment2024"
         tools:targetApi="31">
+        <activity
+            android:name=".TakePhotoActivity"
+            android:exported="true" />
         <activity android:name=".BookDetailsActivity" />
         <activity
             android:name=".Hello1841Activity"
@@ -43,6 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="TencentMapSDK"
             android:value="45GBZ-G456Z-2QZXY-T5XTO-G2ORS-PVF6Q" />
