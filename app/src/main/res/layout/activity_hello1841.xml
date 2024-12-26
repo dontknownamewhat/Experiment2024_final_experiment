@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <!-- EditText for Check-in Description -->
         <EditText
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/clocking_event"
-            android:padding="8dp"/>
+            android:padding="4dp" />
 
         <!-- Button to Add Check-In Record -->
         <Button
@@ -41,64 +41,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Clocking_record"
-            android:layout_gravity="start"/>
+            android:layout_gravity="start" />
 
         <!-- RecyclerView to Display All Check-In Records -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCheckIns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="4dp" />
     </LinearLayout>
+
+    <!-- Button Layout for Photo Actions -->
     <LinearLayout
         android:id="@+id/ll_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
         android:orientation="horizontal"
-        >
+        android:padding="8dp">
 
         <Button
             android:id="@+id/btn_take_photo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/take_picture1"/>
+            android:text="@string/take_picture1" />
 
         <Button
             android:id="@+id/btn_take_photo2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_weight="1"
-            android:text="@string/take_picture2"/>
+            android:text="@string/take_picture2" />
 
         <Button
             android:id="@+id/btn_choose_photo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_weight="1"
-            android:text="@string/album1"/>
+            android:text="@string/album1" />
 
         <Button
             android:id="@+id/btn_choose_photo2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_weight="1"
-            android:text="@string/album2"/>
-
-
+            android:text="@string/album2" />
     </LinearLayout>
 
+    <!-- Image View with Reduced Height -->
     <ImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:scaleType="fitCenter"/>
-
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitCenter" />
 </LinearLayout>
