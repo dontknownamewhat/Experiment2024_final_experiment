@@ -16,9 +16,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by xuang on 2016/8/18.
- */
+
 public class TakePhotoUtils {
 
 
