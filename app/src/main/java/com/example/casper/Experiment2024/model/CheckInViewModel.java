@@ -24,4 +24,9 @@ public class CheckInViewModel extends AndroidViewModel {
     public LiveData<List<CheckIn>> getAllCheckIns() {
         return allCheckIns;
     }
+    public void insertWithLocation(String description, double latitude, double longitude) {
+        CheckIn checkIn = new CheckIn(description, latitude, longitude);
+        repository.insert(checkIn);
+    }
+
 }

@@ -49,4 +49,5 @@ dependencies {
     implementation(libs.activity.ktx)
     implementation(libs.fragment.ktx)
     implementation(libs.tencent.map.vector.sdk)
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }

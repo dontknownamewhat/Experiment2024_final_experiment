@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {CheckIn.class}, version = 1, exportSchema = false)
+@Database(entities = {CheckIn.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract CheckInDao checkInDao();
@@ -26,7 +26,8 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "check_in_database")
-                            .addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration() // 添加销毁性迁移
+                            .addCallback(sRoomDatabaseCallback) // 保持你原有的回调
                             .build();
                 }
             }

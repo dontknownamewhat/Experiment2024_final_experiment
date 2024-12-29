@@ -3,7 +3,9 @@ package com.example.casper.Experiment2024.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity(tableName = "check_in_table")
 public class CheckIn {
@@ -15,14 +17,16 @@ public class CheckIn {
     private double longitude;
     private String description;
     private String imagePath; // 存储照片路径
-
+    private String timestamp;
     // 默认构造函数（Room需要）
     public CheckIn() {}
 
     // 构造函数，用于插入新的打卡记录
-    public CheckIn(String description) {
+    public CheckIn(String description, double latitude, double longitude) {
         this.description = description;
-        Date timestamp = new Date(); // 自动记录当前时间
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
     }
 
     // Getter 和 Setter 方法
@@ -65,5 +69,10 @@ public class CheckIn {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
-
+    public String getTimestamp() {
+        return timestamp;
+    }
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 }

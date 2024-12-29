@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.DecimalFormat;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,10 +52,15 @@ import com.example.casper.Experiment2024.model.CheckInViewModel;
 import com.tencent.tencentmap.mapsdk.maps.CameraUpdateFactory;
 import com.tencent.tencentmap.mapsdk.maps.MapView;
 import com.tencent.tencentmap.mapsdk.maps.TencentMap;
+import com.tencent.tencentmap.mapsdk.maps.model.BitmapDescriptor;
 import com.tencent.tencentmap.mapsdk.maps.model.BitmapDescriptorFactory;
 import com.tencent.tencentmap.mapsdk.maps.model.LatLng;
+import com.tencent.tencentmap.mapsdk.maps.model.Marker;
 import com.tencent.tencentmap.mapsdk.maps.model.MarkerOptions;
-
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import android.location.Location;
+import java.util.Random;
 public class TencentMapFragment extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA_AND_LOCATION = 100;
     private MapView mapView;
@@ -65,14 +71,22 @@ public class TencentMapFragment extends Fragment {
     private ImageView ivTakenPhoto;
 
     // 暨南大学珠海校区的经纬度
-    private static final LatLng JNU_ZHUHAI = new LatLng(22.2559, 113.5415);
+    private static final LatLng JNU_ZHUHAI = new LatLng(22.2488, 113.5344);
 
     private ActivityResultLauncher<String[]> requestPermissionLauncher;
+    FusedLocationProviderClient fusedLocationClient;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(CheckInViewModel.class);
+        Context context = getContext();
+
+        if (context != null) {
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        } else {
+            Log.e("TencentMap", "Context is null during FusedLocationProviderClient initialization.");
+        }
 
         // 设置ActivityResultLauncher来处理拍照结果
         takePictureLauncher = registerForActivityResult(
@@ -112,6 +126,25 @@ public class TencentMapFragment extends Fragment {
                 }
         );
     }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d("TencentMapFragment", "Fragment loaded successfully!");
+        // 初始化 fusedLocationClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
+        if (fusedLocationClient != null) {
+            Log.d("TencentMap", "fusedLocationClient initialized successfully.");
+        } else {
+            Log.e("TencentMap", "fusedLocationClient initialization failed.");
+        }
+
+        mapView = view.findViewById(R.id.mapView);
+        tencentMap = mapView.getMap();
+        setupMap();
+        ivTakenPhoto = view.findViewById(R.id.ivTakenPhoto);
+
+        checkAndRequestPermissions(); // 在此检查并请求权限
+    }
 
     @SuppressLint("QueryPermissionsNeeded")
     private void startCameraOrOtherOperation() {
@@ -130,7 +163,10 @@ public class TencentMapFragment extends Fragment {
             Log.e("TencentMap", "Error creating image file", ex);
         }
     }
-
+    public void handleCheckInButtonClicked() {
+        Log.d("TencentMapFragment", "Check-in button event received from MainActivity.");
+        handleTakenPhoto();
+    }
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -144,31 +180,57 @@ public class TencentMapFragment extends Fragment {
 
     private void handleTakenPhoto() {
         requireActivity().runOnUiThread(() -> {
-            if (ivTakenPhoto == null) {
-                Log.e("TencentMap", "ivTakenPhoto is not initialized.");
-                return;
-            }
-
-            if (photoFile == null || !photoFile.exists()) {
-                Log.e("TencentMap", "Photo file does not exist or is null.");
+            if (ivTakenPhoto == null || photoFile == null || !photoFile.exists()) {
+                Log.e("TencentMap", "Photo capture failed or file does not exist.");
                 return;
             }
 
             ivTakenPhoto.setVisibility(View.VISIBLE);
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-            if (bitmap == null) {
-                Log.e("TencentMap", "Failed to decode the image file.");
-            } else {
+            if (bitmap != null) {
                 ivTakenPhoto.setImageBitmap(bitmap);
 
-                Snackbar.make(requireView(), "拍照成功！", Snackbar.LENGTH_LONG)
-                        .setAction("查看", v -> {
-                            // 当用户点击“查看”时的操作
-                        })
-                        .show();
+                // 获取当前位置
+                Context context = requireContext(); // 获取Fragment的上下文
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling ActivityCompat#requestPermissions here to request the missing permissions
+                    return;
+                }
+
+                // 确保 fusedLocationClient 已经初始化
+                if (fusedLocationClient != null) {
+                    fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+
+                            // 保存到数据库
+                            String description = "拍照打卡记录"; // 可根据需求动态设置描述
+                            viewModel.insertWithLocation(description, latitude, longitude);
+
+                            // 在地图上标记
+                            LatLng position = new LatLng(latitude, longitude);
+                            tencentMap.addMarker(new MarkerOptions()
+                                    .position(position)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                    .title("新打卡记录")
+                                    .snippet(description));
+
+                            Snackbar.make(requireView(), "打卡成功！位置已记录。", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(requireContext(), "无法获取当前位置，记录失败。", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Log.e("TencentMap", "fusedLocationClient is null.");
+                }
+            } else {
+                Log.e("TencentMap", "Failed to decode the image file.");
             }
         });
     }
+
 
     @Nullable
     @Override
@@ -179,34 +241,64 @@ public class TencentMapFragment extends Fragment {
         tencentMap = mapView.getMap();
         setupMap();
         ivTakenPhoto = rootView.findViewById(R.id.ivTakenPhoto);
-        checkAndRequestPermissions();
+
+        checkAndRequestPermissions(); // 在此检查并请求权限
         return rootView;
     }
 
     private void setupMap() {
         if (tencentMap != null) {
             tencentMap.moveCamera(CameraUpdateFactory.newLatLngZoom(JNU_ZHUHAI, 15));
+            BitmapDescriptor customIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
 
-            tencentMap.addMarker(new MarkerOptions()
-                    .position(JNU_ZHUHAI)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            // 使用新的 MarkerOptions 构造函数，直接传递位置参数
+            Marker jnuMarker = tencentMap.addMarker(new MarkerOptions(JNU_ZHUHAI) // 显式指定位置
+                    .anchor(0.5f, 0.5f)
+                    .icon(customIcon) // 设置为自定义图标
                     .title("暨南大学珠海校区"));
 
+            // 显示信息窗口
+            jnuMarker.showInfoWindow();
+
+            // 调用方法以显示打卡标记
             showCheckInMarkers();
+
         } else {
             Log.e("TencentMap", "MapView or TencentMap object is null!");
         }
     }
 
     private void showCheckInMarkers() {
+        // 从 ViewModel 获取所有打卡记录
         viewModel.getAllCheckIns().observe(getViewLifecycleOwner(), checkIns -> {
-            for (CheckIn checkIn : checkIns) {
-                LatLng position = new LatLng(checkIn.getLatitude(), checkIn.getLongitude());
-                tencentMap.addMarker(new MarkerOptions()
-                        .position(position)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                        .title("打卡记录")
-                        .snippet(checkIn.getDescription()));
+            if (tencentMap != null) {
+                for (CheckIn checkIn : checkIns) {
+                    double latitude=checkIn.getLatitude();
+                    double longitude=checkIn.getLongitude();
+                    //默认的打卡位置
+                    if (latitude < 0 || latitude > 150 || longitude < 0 || longitude > 150) {
+                        Random random = new Random();
+                        DecimalFormat df = new DecimalFormat("#.####");
+
+                        double rawLatitude = JNU_ZHUHAI.latitude + (random.nextDouble() * 0.002 - 0.001);
+                        latitude = Double.parseDouble(df.format(rawLatitude));
+                        double rawLongitude = JNU_ZHUHAI.longitude + (random.nextDouble() * 0.02 - 0.01);
+                        longitude = Double.parseDouble(df.format(rawLongitude));
+                    }
+                    LatLng position = new LatLng(latitude, longitude);
+                    String description = checkIn.getDescription();
+                    String timestamp = checkIn.getTimestamp();
+                    // 使用新的构造函数设置位置
+                    Marker marker = tencentMap.addMarker(new MarkerOptions(position) // 显式指定位置
+                            .title("打卡记录")
+                            .snippet("描述: " + description + "\n时间: " + timestamp)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                            .anchor(0.5f, 0.5f)
+                            .draggable(false)); // 禁止拖拽标记
+                    marker.showInfoWindow(); // 显示信息窗口
+                }
+            } else {
+                Log.e("TencentMap", "TencentMap is null while showing check-in markers.");
             }
         });
     }
@@ -276,3 +368,4 @@ public class TencentMapFragment extends Fragment {
         }
     }
 }
+
