@@ -142,7 +142,24 @@ public class TencentMapFragment extends Fragment {
         tencentMap = mapView.getMap();
         setupMap();
         ivTakenPhoto = view.findViewById(R.id.ivTakenPhoto);
+        Button btnZoomIn = view.findViewById(R.id.btn_zoom_in);
+        Button btnZoomOut = view.findViewById(R.id.btn_zoom_out);
 
+        // 设置放大按钮的点击事件
+        btnZoomIn.setOnClickListener(v -> {
+            if (tencentMap != null) {
+                float currentZoom = tencentMap.getCameraPosition().zoom;
+                tencentMap.moveCamera(CameraUpdateFactory.zoomTo(currentZoom + 1));
+            }
+        });
+
+        // 设置缩小按钮的点击事件
+        btnZoomOut.setOnClickListener(v -> {
+            if (tencentMap != null) {
+                float currentZoom = tencentMap.getCameraPosition().zoom;
+                tencentMap.moveCamera(CameraUpdateFactory.zoomTo(currentZoom - 1));
+            }
+        });
         checkAndRequestPermissions(); // 在此检查并请求权限
     }
 
@@ -248,7 +265,12 @@ public class TencentMapFragment extends Fragment {
 
     private void setupMap() {
         if (tencentMap != null) {
+            // 设置初始位置和缩放级别
             tencentMap.moveCamera(CameraUpdateFactory.newLatLngZoom(JNU_ZHUHAI, 15));
+
+            // 设置缩放级别范围（根据需要调整）
+            tencentMap.setMaxZoomLevel(20); // 最大放大级别
+            tencentMap.setMinZoomLevel(3);  // 最小缩小级别，确保可以看到世界地图
             BitmapDescriptor customIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
 
             // 使用新的 MarkerOptions 构造函数，直接传递位置参数
