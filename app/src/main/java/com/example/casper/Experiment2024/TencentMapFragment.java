@@ -222,9 +222,12 @@ public class TencentMapFragment extends Fragment {
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
 
+                            // 获取图片的路径
+                            String imagePath = photoFile.getAbsolutePath();
+
                             // 保存到数据库
                             String description = "拍照打卡记录"; // 可根据需求动态设置描述
-                            viewModel.insertWithLocation(description, latitude, longitude);
+                            viewModel.insertWithLocationAndImage(description, latitude, longitude, imagePath);
 
                             // 在地图上标记
                             LatLng position = new LatLng(latitude, longitude);
@@ -247,6 +250,7 @@ public class TencentMapFragment extends Fragment {
             }
         });
     }
+
 
 
     @Nullable

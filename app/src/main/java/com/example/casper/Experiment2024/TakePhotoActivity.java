@@ -39,8 +39,7 @@ public class TakePhotoActivity extends AppCompatActivity {
     private ImageView iv_image;
     private Uri imageUri;
     //    private List<Uri> imageUris=new ArrayList<>();
-    private ContentResolver resolver = null;
-    private byte[] mContent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,8 +24,9 @@ public class CheckInViewModel extends AndroidViewModel {
     public LiveData<List<CheckIn>> getAllCheckIns() {
         return allCheckIns;
     }
-    public void insertWithLocation(String description, double latitude, double longitude) {
-        CheckIn checkIn = new CheckIn(description, latitude, longitude);
+    public void insertWithLocationAndImage(String description, double latitude, double longitude, String imagePath) {
+        CheckIn checkIn = new CheckIn(description, latitude, longitude,imagePath);
+        checkIn.setImagePath(imagePath);  // 设置照片路径
         repository.insert(checkIn);
     }
 

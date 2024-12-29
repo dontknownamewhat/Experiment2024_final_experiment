@@ -22,7 +22,7 @@ public class CheckIn {
     public CheckIn() {}
 
     // 构造函数，用于插入新的打卡记录
-    public CheckIn(String description, double latitude, double longitude) {
+    public CheckIn(String description, double latitude, double longitude, String imagePath) {
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;

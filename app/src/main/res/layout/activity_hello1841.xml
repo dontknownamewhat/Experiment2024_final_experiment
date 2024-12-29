@@ -49,45 +49,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
+        <!-- 从相册选择照片按钮 -->
+        <Button
+            android:id="@+id/button_select_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_pic"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 拍照上传按钮 -->
+        <Button
+            android:id="@+id/button_take_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/upload_pic"
+            android:layout_marginBottom="16dp"/>
     </LinearLayout>
-
-    <!-- Button Layout for Photo Actions -->
-    <LinearLayout
-        android:id="@+id/ll_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <Button
-            android:id="@+id/btn_take_photo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/take_picture1" />
-
-        <Button
-            android:id="@+id/btn_take_photo2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/take_picture2" />
-
-        <Button
-            android:id="@+id/btn_choose_photo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/album1" />
-
-        <Button
-            android:id="@+id/btn_choose_photo2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/album2" />
-    </LinearLayout>
-
     <!-- Image View with Reduced Height -->
     <ImageView
         android:id="@+id/iv_image"

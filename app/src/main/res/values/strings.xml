@@ -18,4 +18,6 @@
     <string name="take_picture2">拍照2</string>
     <string name="album1">相册1</string>
     <string name="album2">相册2</string>
+    <string name="choose_pic">选择照片</string>
+    <string name="upload_pic">拍照上传</string>
 </resources>

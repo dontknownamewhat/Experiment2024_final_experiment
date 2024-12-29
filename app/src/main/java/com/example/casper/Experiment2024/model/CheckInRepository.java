@@ -26,5 +26,4 @@ public class CheckInRepository {
     public LiveData<List<CheckIn>> getAllCheckIns() {
         return allCheckIns;
     }
-    
 }
