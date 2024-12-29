@@ -56,11 +56,11 @@ public class TakePhotoActivity extends AppCompatActivity {
         btn_take_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                imageUri = createImageUri(MainActivity.this);
-//                Intent intent = new Intent();
-//                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);//如果不设置EXTRA_OUTPUT getData()  获取的是bitmap数据  是压缩后的
-//                startActivityForResult(intent, TAKE_PHOTO_REQUEST_ONE);
+                imageUri = createImageUri(TakePhotoActivity.this);
+                Intent intent = new Intent();
+                intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); // 如果不设置EXTRA_OUTPUT getData() 获取的是bitmap数据  是压缩后的
+                startActivityForResult(intent, TAKE_PHOTO_REQUEST_ONE);
                 try {
                     imageUri = TakePhotoUtils.takePhoto(TakePhotoActivity.this, TAKE_PHOTO_REQUEST_THREE);
                 } catch (IOException e) {
