@@ -96,9 +96,38 @@ public class Hello1841Activity extends AppCompatActivity {
 
         // 观察 LiveData 并更新 RecyclerView
         checkInViewModel.getAllCheckIns().observe(this, checkIns -> {
-            adapter = new CheckInAdapter(checkIns);
+            adapter = new CheckInAdapter(checkIns, checkIn -> {
+                String imagePath = checkIn.getImagePath();
+                if (imagePath != null && imagePath.contains("content://")) {
+                    // 提取以 "content://" 开头的部分
+                    int startIndex = imagePath.indexOf("content://");
+                    String validPath = imagePath.substring(startIndex);
+
+                    // 截取到图片 ID 结束位置（防止多余内容）
+                    int endIndex = validPath.indexOf("/", startIndex + "content://media/external/images/media/".length());
+                    if (endIndex != -1) {
+                        validPath = validPath.substring(0, endIndex);
+                    }
+
+                    Uri imageUri = Uri.parse(validPath);
+
+                    // 验证 URI 是否可用
+                    try {
+                        getContentResolver().openInputStream(imageUri).close();
+                        iv_image.setImageURI(imageUri); // 设置图片
+                        Log.d("ImageCheck", "显示图片 URI: " + imageUri.toString());
+                    } catch (Exception e) {
+                        Log.e("ImageCheck", "无法加载图片，错误: " + e.getMessage());
+                        Toast.makeText(this, "图片加载失败", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "该记录的图片路径无效。", Toast.LENGTH_SHORT).show();
+                }
+
+            });
             recyclerView.setAdapter(adapter);
         });
+
 
         // 添加打卡记录
         btnAddCheckIn.setOnClickListener(v -> {

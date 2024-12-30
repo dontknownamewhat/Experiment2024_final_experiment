@@ -9,22 +9,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.casper.Experiment2024.R;
 import com.example.casper.Experiment2024.model.CheckIn;
+
 import java.util.List;
 
 public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInViewHolder> {
 
     private List<CheckIn> checkInList;
+    private OnItemClickListener onItemClickListener;
+
+    // 定义接口
+    public interface OnItemClickListener {
+        void onItemClick(CheckIn checkIn);
+    }
+
+    // 添加构造方法，支持传入点击事件处理逻辑
+    public CheckInAdapter(List<CheckIn> checkInList, OnItemClickListener onItemClickListener) {
+        this.checkInList = checkInList;
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public static class CheckInViewHolder extends RecyclerView.ViewHolder {
         public TextView tvDescription;
+
         public CheckInViewHolder(View itemView) {
             super(itemView);
             tvDescription = itemView.findViewById(R.id.tvDescription);
         }
-    }
 
-    public CheckInAdapter(List<CheckIn> checkInList) {
-        this.checkInList = checkInList;
+        public void bind(CheckIn checkIn, OnItemClickListener listener) {
+            tvDescription.setText(checkIn.getDescription());
+            itemView.setOnClickListener(v -> listener.onItemClick(checkIn));
+        }
     }
 
     @NonNull
@@ -38,7 +53,7 @@ public class CheckInAdapter extends RecyclerView.Adapter<CheckInAdapter.CheckInV
     @Override
     public void onBindViewHolder(@NonNull CheckInViewHolder holder, int position) {
         CheckIn currentItem = checkInList.get(position);
-        holder.tvDescription.setText(currentItem.getDescription());
+        holder.bind(currentItem, onItemClickListener); // 将点击事件绑定到 ViewHolder
     }
 
     @Override
