@@ -27,6 +27,7 @@ public class CheckIn {
         this.latitude = latitude;
         this.longitude = longitude;
         this.timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+        this.imagePath = imagePath;
     }
 
     // Getter 和 Setter 方法
